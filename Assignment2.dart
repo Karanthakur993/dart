@@ -1,7 +1,16 @@
 //import dart:html;
 import 'package:intl/intl.dart';
+//import 'package:basic_utils/basic_utils.dart';
+//import 'string_apis.dart';
 
 final cur = new NumberFormat("#,##0.00", "en_IN");
+
+extension CapExtension on String {
+  String get titleCase => this
+      .split(' ')
+      .map((word) => word[0].toUpperCase() + word.substring(1))
+      .join(' ');
+}
 
 class emp {
   double sal;
@@ -49,8 +58,12 @@ class emp {
     return net;
   }
 
-  void nameprint(var ename, double sal, int eid) {
-    print("Name : $ename  Sal is ${cur.format(sal)} Employee id is $eid");
+  void nameprint(String ename, double sal, int eid) {
+    var recase = RegExp(r'\b\w');
+    String str = ename.titleCase;
+    str.replaceAllMapped(recase, (match) => match.group(0).toUpperCase());
+
+    print("Name : $str  Sal is ${cur.format(sal)} Employee id is $eid");
   }
 
   double tax_cal(sal) {
@@ -69,7 +82,7 @@ void main() {
   emp e1 = emp();
   e1.id = 19;
   e1.sal = 1000000;
-  e1.ename = "Karan";
+  e1.ename = "karan thakur";
   e1.nameprint(e1.ename, e1.sal, e1.id);
   da_calc = e1.da(e1.sal);
   print("Da is ${cur.format(da_calc)}");
